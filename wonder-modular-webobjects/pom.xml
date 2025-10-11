@@ -20,6 +20,10 @@
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>io.github.wocommunity</groupId>
+			<artifactId>webobjects-patches</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>com.webobjects</groupId>
 			<artifactId>JavaWebObjects</artifactId>
 			<exclusions>
@@ -28,10 +32,6 @@
 					<artifactId>JavaXML</artifactId>
 				</exclusion>
 			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>io.github.wocommunity</groupId>
-			<artifactId>webobjects-patches</artifactId>
 		</dependency>
 	</dependencies>
 	<build>
@@ -48,10 +48,30 @@
 						<configuration>
 							<artifactSet>
 								<includes>
-									<include>io.github.wocommunity:webobjcets-patches</include>
+									<include>io.github.wocommunity:webobjects-patches</include>
 									<include>com.webobjects:JavaWebObjects</include>
 								</includes>
 							</artifactSet>
+							<filters>
+								<filter>
+									<artifact>*:*</artifact>
+									<excludes>
+										<exclude>KeyValueCodingProtectedAccessor.class</exclude>
+										<exclude>com/webobjects/appserver/WOWSDDRegistrar.class</exclude>
+										<exclude>com/webobjects/appserver/WOWebServiceRegistrar.class</exclude>
+										<exclude>com/webobjects/appserver/WOWebServiceUtilities.class</exclude>
+										<exclude>com/webobjects/appserver/_WODocumentType.class</exclude>
+										<exclude>com/webobjects/appserver/_WOMessageHelper.class</exclude>
+										<exclude>com/webobjects/appserver/_private/WOAxisSession.class</exclude>
+										<exclude>com/webobjects/appserver/_private/WOComponentSerializer.class</exclude>
+										<exclude>com/webobjects/appserver/_private/WOComponentSerializerFactory.class</exclude>
+										<exclude>com/webobjects/appserver/_private/WORPCProvider.class</exclude>
+										<exclude>com/webobjects/appserver/_private/WOServerSessionHandler.class</exclude>
+										<exclude>com/webobjects/appserver/_private/WOWebService.class</exclude>
+										<exclude>com/webobjects/appserver/_private/WOWebServiceRequestHandler.class</exclude>
+									</excludes>
+								</filter>
+							</filters>
 							<useDependencyReducedPomInJar>true</useDependencyReducedPomInJar>
 						</configuration>
 					</execution>
@@ -68,7 +88,37 @@
 							<goal>add-module-info</goal>
 						</goals>
 						<configuration>
+							<jdepsExtraArgs>
+								<jdepsExtraArg>--ignore-missing-deps</jdepsExtraArg>
+								<jdepsExtraArg>--multi-release=${womodules.jvm.version}</jdepsExtraArg>
+							</jdepsExtraArgs>
 							<jvmVersion>${womodules.jvm.version}</jvmVersion>
+							<exclusions>
+								<exclusion>
+									<groupId>com.webobjects</groupId>
+									<artifactId>JavaFoundation</artifactId>
+								</exclusion>
+								<exclusion>
+									<groupId>io.github.wocommunity</groupId>
+									<artifactId>foundation-patches</artifactId>
+								</exclusion>
+								<exclusion>
+									<groupId>io.github.wocommunity</groupId>
+									<artifactId>eocontrol-patches</artifactId>
+								</exclusion>
+								<exclusion>
+									<groupId>com.webobjects</groupId>
+									<artifactId>JavaEOControl</artifactId>
+								</exclusion>
+								<exclusion>
+									<groupId>com.webobjects</groupId>
+									<artifactId>JavaWebObjects</artifactId>
+								</exclusion>
+								<exclusion>
+									<groupId>io.github.wocommunity</groupId>
+									<artifactId>webobjects-patches</artifactId>
+								</exclusion>
+							</exclusions>
 							<module>
 								<moduleInfo>
 									<name>org.wocommunity.webobjects.webobjects</name>

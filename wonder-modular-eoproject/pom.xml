@@ -46,6 +46,14 @@
 									<include>com.webobjects:JavaEOProject</include>
 								</includes>
 							</artifactSet>
+							<filters>
+								<filter>
+									<artifact>*:*</artifact>
+									<excludes>
+										<exclude>KeyValueCodingProtectedAccessor.class</exclude>
+									</excludes>
+								</filter>
+							</filters>
 							<useDependencyReducedPomInJar>true</useDependencyReducedPomInJar>
 						</configuration>
 					</execution>
@@ -62,6 +70,9 @@
 							<goal>add-module-info</goal>
 						</goals>
 						<configuration>
+							<jdepsExtraArgs>
+								<jdepsExtraArg>--multi-release=${womodules.jvm.version}</jdepsExtraArg>
+							</jdepsExtraArgs>
 							<jvmVersion>${womodules.jvm.version}</jvmVersion>
 							<module>
 								<moduleInfo>
@@ -77,6 +88,44 @@
 									</exports>
 								</moduleInfo>
 							</module>
+							<exclusions>
+								<exclusion>
+									<groupId>com.webobjects</groupId>
+									<artifactId>JavaFoundation</artifactId>
+								</exclusion>
+								<exclusion>
+									<groupId>io.github.wocommunity</groupId>
+									<artifactId>foundation-patches</artifactId>
+								</exclusion>
+								<exclusion>
+									<groupId>io.github.wocommunity</groupId>
+									<artifactId>eocontrol-patches</artifactId>
+								</exclusion>
+								<exclusion>
+									<groupId>com.webobjects</groupId>
+									<artifactId>JavaEOControl</artifactId>
+								</exclusion>
+								<exclusion>
+									<groupId>com.webobjects</groupId>
+									<artifactId>JavaWebObjects</artifactId>
+								</exclusion>
+								<exclusion>
+									<groupId>io.github.wocommunity</groupId>
+									<artifactId>webobjects-patches</artifactId>
+								</exclusion>
+								<exclusion>
+									<groupId>com.webobjects</groupId>
+									<artifactId>JavaEOAccess</artifactId>
+								</exclusion>
+								<exclusion>
+									<groupId>io.github.wocommunity</groupId>
+									<artifactId>eoaccess-patches</artifactId>
+								</exclusion>
+								<exclusion>
+									<groupId>com.webobjects</groupId>
+									<artifactId>JavaEOProject</artifactId>
+								</exclusion>
+							</exclusions>
 						</configuration>
 					</execution>
 				</executions>

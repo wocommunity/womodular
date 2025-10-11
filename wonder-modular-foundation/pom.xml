@@ -10,12 +10,12 @@
 	<artifactId>wonder-modular-foundation</artifactId>
 	<dependencies>
 		<dependency>
-			<groupId>com.webobjects</groupId>
-			<artifactId>JavaFoundation</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>io.github.wocommunity</groupId>
 			<artifactId>foundation-patches</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.webobjects</groupId>
+			<artifactId>JavaFoundation</artifactId>
 		</dependency>
 	</dependencies>
 	<build>
@@ -53,6 +53,16 @@
 						</goals>
 						<configuration>
 							<jvmVersion>${womodules.jvm.version}</jvmVersion>
+							<exclusions>
+								<exclusion>
+									<groupId>com.webobjects</groupId>
+									<artifactId>JavaFoundation</artifactId>
+								</exclusion>
+								<exclusion>
+									<groupId>io.github.wocommunity</groupId>
+									<artifactId>foundation-patches</artifactId>
+								</exclusion>
+							</exclusions>
 							<module>
 								<moduleInfo>
 									<name>org.wocommunity.webobjects.foundation</name>
@@ -73,10 +83,8 @@
 										com.webobjects.foundation.development.NSBundleAdaptorProvider;
 									</uses>
 									<provides>
-										com.webobjects.foundation.development.NSBundleAdaptorProvider with com.webobjects.foundation.development.CFBundleAdaptor;
-										com.webobjects.foundation.development.NSBundleAdaptorProvider with com.webobjects.foundation.development.JarBundleAdaptor;
+										com.webobjects.foundation.development.NSBundleAdaptorProvider with com.webobjects.foundation.development.CFBundleAdaptor, com.webobjects.foundation.development.JarBundleAdaptor;
 									</provides>
-									<addServiceUses>true</addServiceUses>
 								</moduleInfo>
 							</module>
 						</configuration>

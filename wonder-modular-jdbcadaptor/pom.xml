@@ -25,12 +25,12 @@
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.webobjects</groupId>
-			<artifactId>JavaJDBCAdaptor</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>io.github.wocommunity</groupId>
 			<artifactId>jdbcadaptor-patches</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.webobjects</groupId>
+			<artifactId>JavaJDBCAdaptor</artifactId>
 		</dependency>
 	</dependencies>
 	<build>
@@ -67,7 +67,46 @@
 							<goal>add-module-info</goal>
 						</goals>
 						<configuration>
+							<!-- I haven't figured out why I'm getting multi-release true in MANIFEST.MF -->
+							<jdepsExtraArgs>
+								<jdepsExtraArg>--multi-release=${womodules.jvm.version}</jdepsExtraArg>
+								<jdepsExtraArg>--ignore-missing-deps</jdepsExtraArg>
+							</jdepsExtraArgs>
 							<jvmVersion>${womodules.jvm.version}</jvmVersion>
+							<exclusions>
+								<exclusion>
+									<groupId>com.webobjects</groupId>
+									<artifactId>JavaFoundation</artifactId>
+								</exclusion>
+								<exclusion>
+									<groupId>io.github.wocommunity</groupId>
+									<artifactId>foundation-patches</artifactId>
+								</exclusion>
+								<exclusion>
+									<groupId>io.github.wocommunity</groupId>
+									<artifactId>eocontrol-patches</artifactId>
+								</exclusion>
+								<exclusion>
+									<groupId>com.webobjects</groupId>
+									<artifactId>JavaEOControl</artifactId>
+								</exclusion>
+								<exclusion>
+									<groupId>io.github.wocommunity</groupId>
+									<artifactId>eoaccess-patches</artifactId>
+								</exclusion>
+								<exclusion>
+									<groupId>com.webobjects</groupId>
+									<artifactId>JavaEOAccess</artifactId>
+								</exclusion>
+								<exclusion>
+									<groupId>io.github.wocommunity</groupId>
+									<artifactId>jdbcadaptor-patches</artifactId>
+								</exclusion>
+								<exclusion>
+									<groupId>com.webobjects</groupId>
+									<artifactId>JavaJDBCAdaptor</artifactId>
+								</exclusion>
+							</exclusions>
 							<module>
 								<moduleInfo>
 									<name>org.wocommunity.webobjects.jdbcadaptor</name>
