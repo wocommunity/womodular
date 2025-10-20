@@ -41,56 +41,92 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
-				<groupId>org.moditect</groupId>
-				<artifactId>moditect-maven-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>add-module-info</id>
-						<phase>package</phase>
-						<goals>
-							<goal>add-module-info</goal>
-						</goals>
-						<configuration>
-							<jvmVersion>${womodules.jvm.version}</jvmVersion>
-							<exclusions>
-								<exclusion>
-									<groupId>com.webobjects</groupId>
-									<artifactId>JavaFoundation</artifactId>
-								</exclusion>
-								<exclusion>
-									<groupId>io.github.wocommunity</groupId>
-									<artifactId>foundation-patches</artifactId>
-								</exclusion>
-							</exclusions>
-							<module>
-								<moduleInfo>
-									<name>org.wocommunity.webobjects.foundation</name>
-									<requires>
-										java.naming;
-										java.sql;
-										java.xml;
-									</requires>
-									<exports>
-										com.webobjects.foundation;
-										com.webobjects.foundation.development;
-										com.webobjects.foundation.xml;
-									</exports>
-									<opens>
-										com.webobjects.foundation to java.base;
-									</opens>
-									<uses>
-										com.webobjects.foundation.development.NSBundleAdaptorProvider;
-									</uses>
-									<provides>
-										com.webobjects.foundation.development.NSBundleAdaptorProvider with com.webobjects.foundation.development.CFBundleAdaptor, com.webobjects.foundation.development.JarBundleAdaptor;
-									</provides>
-								</moduleInfo>
-							</module>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
 		</plugins>
 	</build>
+	<profiles>
+		<profile>
+			<id>jigsaw</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<executions>
+							<execution>
+								<phase>package</phase>
+								<goals><goal>run</goal></goals>
+								<configuration>
+									<target>
+										<!-- Extract the JAR -->
+										<unjar 
+											src="${project.build.directory}/${project.build.finalName}.jar"
+											dest="${project.build.directory}/extracted"
+											/>
+										<!-- Move Resources inside the extracted content -->
+										<move todir="${project.build.directory}/extracted/META-INF/webobjects/Resources">
+											<fileset dir="${project.build.directory}/extracted/Resources" />
+										</move>
+										<!-- Delete the old directory -->
+										<delete dir="${project.build.directory}/extracted/Resources" />
+										<!-- Repackage the jar now -->
+										<jar destfile="${project.build.directory}/${project.build.finalName}.jar"
+											basedir="${project.build.directory}/extracted"
+											/>
+									</target>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.moditect</groupId>
+						<artifactId>moditect-maven-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>add-module-info</id>
+								<phase>package</phase>
+								<goals>
+									<goal>add-module-info</goal>
+								</goals>
+								<configuration>
+									<jvmVersion>${womodules.jvm.version}</jvmVersion>
+									<exclusions>
+										<exclusion>
+											<groupId>com.webobjects</groupId>
+											<artifactId>JavaFoundation</artifactId>
+										</exclusion>
+										<exclusion>
+											<groupId>io.github.wocommunity</groupId>
+											<artifactId>foundation-patches</artifactId>
+										</exclusion>
+									</exclusions>
+									<module>
+										<moduleInfo>
+											<name>org.wocommunity.webobjects.foundation</name>
+											<open>true</open>
+											<requires>
+												java.naming;
+												java.sql;
+												java.xml;
+											</requires>
+											<exports>
+												com.webobjects.foundation;
+												com.webobjects.foundation.development;
+												com.webobjects.foundation.xml;
+											</exports>
+											<uses>
+												com.webobjects.foundation.development.NSBundleAdaptorProvider;
+											</uses>
+											<provides>
+												com.webobjects.foundation.development.NSBundleAdaptorProvider with com.webobjects.foundation.development.CFBundleAdaptor, com.webobjects.foundation.development.JarBundleAdaptor, com.webobjects.foundation.development.JigsawBundleAdaptor;
+											</provides>
+										</moduleInfo>
+									</module>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>

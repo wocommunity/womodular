@@ -51,65 +51,104 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
-				<groupId>org.moditect</groupId>
-				<artifactId>moditect-maven-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>add-module-info</id>
-						<phase>package</phase>
-						<goals>
-							<goal>add-module-info</goal>
-						</goals>
-						<configuration>
-							<!-- I haven't figured out why I'm getting multi-release true in MANIFEST.MF -->
-							<jdepsExtraArgs>
-								<jdepsExtraArg>--multi-release=${womodules.jvm.version}</jdepsExtraArg>
-							</jdepsExtraArgs>
-							<jvmVersion>${womodules.jvm.version}</jvmVersion>
-							<exclusions>
-								<exclusion>
-									<groupId>com.webobjects</groupId>
-									<artifactId>JavaFoundation</artifactId>
-								</exclusion>
-								<exclusion>
-									<groupId>io.github.wocommunity</groupId>
-									<artifactId>foundation-patches</artifactId>
-								</exclusion>
-								<exclusion>
-									<groupId>io.github.wocommunity</groupId>
-									<artifactId>eocontrol-patches</artifactId>
-								</exclusion>
-								<exclusion>
-									<groupId>com.webobjects</groupId>
-									<artifactId>JavaEOControl</artifactId>
-								</exclusion>
-								<exclusion>
-									<groupId>io.github.wocommunity</groupId>
-									<artifactId>eoaccess-patches</artifactId>
-								</exclusion>
-								<exclusion>
-									<groupId>com.webobjects</groupId>
-									<artifactId>JavaEOAccess</artifactId>
-								</exclusion>
-							</exclusions>
-							<module>
-								<moduleInfo>
-									<name>org.wocommunity.webobjects.eoaccess</name>
-									<requires>
-										org.wocommunity.webobjects.foundation;
-										org.wocommunity.webobjects.eocontrol;
-									</requires>
-									<exports>
-										com.webobjects.eoaccess;
-										com.webobjects.eoaccess.synchronization;
-									</exports>
-								</moduleInfo>
-							</module>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
 		</plugins>
 	</build>
+	<profiles>
+		<profile>
+			<id>jigsaw</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<executions>
+							<execution>
+								<phase>package</phase>
+								<goals><goal>run</goal></goals>
+								<configuration>
+									<target>
+										<!-- Extract the JAR -->
+										<unjar 
+											src="${project.build.directory}/${project.build.finalName}.jar"
+											dest="${project.build.directory}/extracted"
+											/>
+										<!-- Move Resources inside the extracted content -->
+										<move todir="${project.build.directory}/extracted/META-INF/webobjects/Resources">
+											<fileset dir="${project.build.directory}/extracted/Resources" />
+										</move>
+										<!-- Delete the old directory -->
+										<delete dir="${project.build.directory}/extracted/Resources" />
+										<!-- Repackage the jar now -->
+										<jar destfile="${project.build.directory}/${project.build.finalName}.jar"
+											basedir="${project.build.directory}/extracted"
+											/>
+									</target>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.moditect</groupId>
+						<artifactId>moditect-maven-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>add-module-info</id>
+								<phase>package</phase>
+								<goals>
+									<goal>add-module-info</goal>
+								</goals>
+								<configuration>
+									<!-- I haven't figured out why I'm getting multi-release true in MANIFEST.MF -->
+									<jdepsExtraArgs>
+										<jdepsExtraArg>--multi-release=${womodules.jvm.version}</jdepsExtraArg>
+									</jdepsExtraArgs>
+									<jvmVersion>${womodules.jvm.version}</jvmVersion>
+									<exclusions>
+										<exclusion>
+											<groupId>com.webobjects</groupId>
+											<artifactId>JavaFoundation</artifactId>
+										</exclusion>
+										<exclusion>
+											<groupId>io.github.wocommunity</groupId>
+											<artifactId>foundation-patches</artifactId>
+										</exclusion>
+										<exclusion>
+											<groupId>io.github.wocommunity</groupId>
+											<artifactId>eocontrol-patches</artifactId>
+										</exclusion>
+										<exclusion>
+											<groupId>com.webobjects</groupId>
+											<artifactId>JavaEOControl</artifactId>
+										</exclusion>
+										<exclusion>
+											<groupId>io.github.wocommunity</groupId>
+											<artifactId>eoaccess-patches</artifactId>
+										</exclusion>
+										<exclusion>
+											<groupId>com.webobjects</groupId>
+											<artifactId>JavaEOAccess</artifactId>
+										</exclusion>
+									</exclusions>
+									<module>
+										<moduleInfo>
+											<name>org.wocommunity.webobjects.eoaccess</name>
+											<open>true</open>
+											<requires>
+												org.wocommunity.webobjects.foundation;
+												org.wocommunity.webobjects.eocontrol;
+											</requires>
+											<exports>
+												com.webobjects.eoaccess;
+												com.webobjects.eoaccess.synchronization;
+											</exports>
+										</moduleInfo>
+									</module>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>
