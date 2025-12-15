@@ -135,10 +135,10 @@
 									<open>true</open>
 									<requires>
 										java.desktop;
-										org.wocommunity.webobjects.foundation;
-										org.wocommunity.webobjects.eocontrol;
-										org.wocommunity.webobjects.eoaccess;
-										org.wocommunity.webobjects.webobjects;
+										transitive org.wocommunity.webobjects.foundation;
+										transitive org.wocommunity.webobjects.eocontrol;
+										transitive org.wocommunity.webobjects.eoaccess;
+										transitive org.wocommunity.webobjects.webobjects;
 										org.wocommunity.webobjects.dtwgeneration;
 										org.wocommunity.webobjects.eoproject;
 									</requires>

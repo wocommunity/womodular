@@ -127,8 +127,8 @@
 									<name>org.wocommunity.webobjects.eoaccess</name>
 									<open>true</open>
 									<requires>
-										org.wocommunity.webobjects.foundation;
-										org.wocommunity.webobjects.eocontrol;
+										transitive org.wocommunity.webobjects.foundation;
+										transitive org.wocommunity.webobjects.eocontrol;
 									</requires>
 									<exports>
 										com.webobjects.eoaccess;

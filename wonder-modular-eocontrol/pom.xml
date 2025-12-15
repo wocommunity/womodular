@@ -114,7 +114,7 @@
 									<name>org.wocommunity.webobjects.eocontrol</name>
 									<open>true</open>
 									<requires>
-										org.wocommunity.webobjects.foundation;
+										transitive org.wocommunity.webobjects.foundation;
 									</requires>
 									<exports>
 										com.webobjects.eocontrol;

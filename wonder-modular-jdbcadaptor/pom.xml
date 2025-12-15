@@ -141,9 +141,9 @@
 									<name>org.wocommunity.webobjects.jdbcadaptor</name>
 									<open>true</open>
 									<requires>
-										org.wocommunity.webobjects.foundation;
-										org.wocommunity.webobjects.eocontrol;
-										org.wocommunity.webobjects.eoaccess;
+										transitive org.wocommunity.webobjects.foundation;
+										transitive org.wocommunity.webobjects.eocontrol;
+										transitive org.wocommunity.webobjects.eoaccess;
 									</requires>
 									<exports>
 										com.webobjects.jdbcadaptor;

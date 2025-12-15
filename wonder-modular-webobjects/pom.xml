@@ -156,8 +156,8 @@
 										java.logging;
 										java.management;
 										java.xml;
-										org.wocommunity.webobjects.foundation;
-										org.wocommunity.webobjects.eocontrol;
+										transitive org.wocommunity.webobjects.foundation;
+										transitive org.wocommunity.webobjects.eocontrol;
 									</requires>
 									<exports>
 										com.webobjects._ideservices;
