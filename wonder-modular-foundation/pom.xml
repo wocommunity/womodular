@@ -110,7 +110,7 @@
 										com.webobjects.foundation.development.NSBundleAdaptorProvider;
 									</uses>
 									<provides>
-										com.webobjects.foundation.development.NSBundleAdaptorProvider with com.webobjects.foundation.development.CFBundleAdaptor, com.webobjects.foundation.development.JarBundleAdaptor, com.webobjects.foundation.development.JigsawBundleAdaptor, com.webobjects.foundation.development.MavenFluffyBunnyProjectAdaptor;
+										com.webobjects.foundation.development.NSBundleAdaptorProvider with com.webobjects.foundation.development.CFBundleAdaptor, com.webobjects.foundation.development.JarBundleAdaptor, com.webobjects.foundation.development.JigsawBundleAdaptor, com.webobjects.foundation.development.JigsawJarBundleAdaptor, com.webobjects.foundation.development.MavenFluffyBunnyProjectAdaptor;
 									</provides>
 								</moduleInfo>
 							</module>
