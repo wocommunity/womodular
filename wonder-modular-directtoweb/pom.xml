@@ -69,9 +69,12 @@
 							<filters>
 								<filter>
 									<artifact>*:*</artifact>
-									<excludes>
-										<exclude>KeyValueCodingProtectedAccessor.class</exclude>
-									</excludes>
+									<includes>
+										<include>com/webobjects/directtoweb/**</include>
+										<include>com/apple/client/directtoweb/common/**</include>
+										<include>Resources/**</include>
+										<include>WebServerResources/**</include>
+									</includes>
 								</filter>
 							</filters>
 							<useDependencyReducedPomInJar>true</useDependencyReducedPomInJar>
@@ -134,7 +137,6 @@
 									<name>org.wocommunity.webobjects.directtoweb</name>
 									<open>true</open>
 									<requires>
-										java.desktop;
 										transitive org.wocommunity.webobjects.foundation;
 										transitive org.wocommunity.webobjects.eocontrol;
 										transitive org.wocommunity.webobjects.eoaccess;
@@ -144,10 +146,6 @@
 									</requires>
 									<exports>
 										com.webobjects.directtoweb;
-										com.apple.client.directtoweb;
-										com.apple.client.directtoweb.common;
-										com.apple.client.directtoweb.mvc;
-										com.apple.client.directtoweb.utils;
 									</exports>
 								</moduleInfo>
 							</module>
