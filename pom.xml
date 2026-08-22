@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.wocommunity</groupId>
 	<artifactId>womodular</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.1</version>
 	<packaging>pom</packaging>
 	<properties>
 		<maven.compiler.release>25</maven.compiler.release>
-		<wopatches.version>0.1.0</wopatches.version>
+		<wopatches.version>0.2.0</wopatches.version>
 		<womodules.jvm.version>25</womodules.jvm.version>
 	</properties>
 	<name>WOModular</name>

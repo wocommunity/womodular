@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.wocommunity</groupId>
 		<artifactId>womodular</artifactId>
-		<version>1.0.0</version>
+		<version>1.0.1</version>
 	</parent>
 	<artifactId>wonder-modular-eocontrol</artifactId>
 	<dependencies>
